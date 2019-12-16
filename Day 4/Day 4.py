@@ -16,7 +16,7 @@ while part1[0:5] != '00000':
         part1 = '0123ghf'
     i += 1
 
-print "The hexadecimal for Part 1 is: " + new_input_line + " and the answer is: " + str(i-1) + "." # Correct!
+print "The MD5 hash for Part 1 is: " + new_input_line + " and the answer is: " + str(i-1) + "." # Correct!
 
 i = 0
 while part2[0:6] != '000000':
@@ -27,5 +27,5 @@ while part2[0:6] != '000000':
         part2 = '0123ghf'
     i += 1
 
-print "The hexadecimal for Part 2 is: " + new_input_line + " and the answer is: " + str(i-1) + "."
+print "The MD5 hash for Part 2 is: " + new_input_line + " and the answer is: " + str(i-1) + "." # Correct!
 
