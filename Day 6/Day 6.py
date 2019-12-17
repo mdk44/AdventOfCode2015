@@ -11,8 +11,8 @@ lines = text_file.read().split('\n')
 def image_grid(grid):
     off = (0, 0, 0)
     on = (226, 25, 224)
-    width = 50
-    height = 50
+    width = 5000
+    height = 5000
     img = Image.new('RGB', (width, height), color = off)
     dr = ImageDraw.Draw(img)
     for y in grid:
@@ -45,16 +45,10 @@ OFF = 1
 ON = 2
 
 grid = {}
-for y in range(0,10):
+for y in range(0,1000):
     grid[y] = {}
-    for x in range(0,10):
+    for x in range(0,1000):
         grid[y][x] = OFF
-
-toggle_lights(grid, 2, 4, 2, 4)
-off_lights(grid, 1, 6, 2, 9)
-on_lights(grid, 0, 1, 9, 1)
-
-
 
 image_grid(grid)
 
