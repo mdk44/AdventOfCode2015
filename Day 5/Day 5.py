@@ -35,9 +35,10 @@ def naughty_or_nice(string):
         result = "Naughty"
     return result
 
-total_nice = 0
+#Part 1
+total_nice_p1 = 0
 for i in range(0, len(lines)):
     if naughty_or_nice(lines[i]) == "Nice":
-        total_nice += 1
+        total_nice_p1 += 1
 
-print "Part 1: " + str(total_nice)  # Correct!
+print "Part 1: " + str(total_nice_p1)  # Correct!
