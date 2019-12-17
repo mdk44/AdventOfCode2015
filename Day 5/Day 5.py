@@ -1,10 +1,12 @@
 input_file = 'Day 5\\Input.csv'
 text_file = open(input_file)
-# lines = text_file.read().split('\n')
-lines = []
-lines.append('ugknbfddgicrmopn')
-
-print lines[0]
+lines = text_file.read().split('\n')
+# lines = [] # all test results are correct
+# lines.append('ugknbfddgicrmopn')
+# lines.append('aaa')
+# lines.append('jchzalrnumimnmhp')
+# lines.append('haegwjzuvuyypxyu')
+# lines.append('dvszwmarrgswjxmb')
 
 def find_vowels(string):
     num_vowels = 0
@@ -28,9 +30,14 @@ def find_bad(string):
 
 def naughty_or_nice(string):
     if find_vowels(string) > 2 and find_doubles(string) > 0 and find_bad(string) == 0:
-        nice = 1
+        result = "Nice"
     else:
-        nice = 0
-    return nice
+        result = "Naughty"
+    return result
 
-print naughty_or_nice(lines[0])
+total_nice = 0
+for i in range(0, len(lines)):
+    if naughty_or_nice(lines[i]) == "Nice":
+        total_nice += 1
+
+print "Part 1: " + str(total_nice)  # Correct!
