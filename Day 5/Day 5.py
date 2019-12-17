@@ -7,6 +7,13 @@ lines = text_file.read().split('\n')
 # lines.append('jchzalrnumimnmhp')
 # lines.append('haegwjzuvuyypxyu')
 # lines.append('dvszwmarrgswjxmb')
+# lines.append('xyxy')
+# lines.append('aabcdefgaa')
+# lines.append('aaa')
+# lines.append('qjhvhtzxzqqjkmpb')
+# lines.append('xxyxx')
+# lines.append('uurcxstgmygtbstg')
+# lines.append('ieodomkazucvgmuy')
 
 def find_vowels(string):
     num_vowels = 0
@@ -28,8 +35,29 @@ def find_bad(string):
         num_bad += 1
     return num_bad
 
-def naughty_or_nice(string):
+def naughty_or_nice_p1(string):
     if find_vowels(string) > 2 and find_doubles(string) > 0 and find_bad(string) == 0:
+        result = "Nice"
+    else:
+        result = "Naughty"
+    return result
+
+def repeat_letters(string):
+    num_rpt = 0
+    for i in range(2,len(string)):
+        if string[i - 2: i] in string[i:]:
+                num_rpt += 1
+    return num_rpt
+
+def double_split(string):
+    num_double = 0
+    for i in range(2,len(string)):
+        if string[i - 2] == string[i]:
+            num_double += 1
+    return num_double
+
+def naughty_or_nice_p2(string):
+    if repeat_letters(string) > 0 and double_split(string) > 0:
         result = "Nice"
     else:
         result = "Naughty"
@@ -38,7 +66,14 @@ def naughty_or_nice(string):
 #Part 1
 total_nice_p1 = 0
 for i in range(0, len(lines)):
-    if naughty_or_nice(lines[i]) == "Nice":
+    if naughty_or_nice_p1(lines[i]) == "Nice":
         total_nice_p1 += 1
 
+#Part 2
+total_nice_p2 = 0
+for i in range(0, len(lines)):
+    if naughty_or_nice_p2(lines[i]) == "Nice":
+        total_nice_p2 += 1
+
 print "Part 1: " + str(total_nice_p1)  # Correct!
+print "Part 2: " + str(total_nice_p2)  # Correct!
