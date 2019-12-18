@@ -53,6 +53,24 @@ def off_lights(grid, start_x, start_y, end_x, end_y):
         for x in range(start_x, end_x + 1):
             grid[y][x] = OFF
 
+def toggle_lights2(grid, start_x, start_y, end_x, end_y):
+    for y in range(start_y, end_y + 1):
+        for x in range(start_x, end_x + 1):
+            grid[y][x] += 2
+
+def on_lights2(grid, start_x, start_y, end_x, end_y):
+    for y in range(start_y, end_y + 1):
+        for x in range(start_x, end_x + 1):
+            grid[y][x] += 1
+
+def off_lights2(grid, start_x, start_y, end_x, end_y):
+    for y in range(start_y, end_y + 1):
+        for x in range(start_x, end_x + 1):
+            grid[y][x] -= 1
+            if grid[y][x] < 0:
+                grid[y][x] = 0
+
+# Part 1
 OFF = 1
 ON = 2
 
@@ -81,6 +99,30 @@ for y in grid:
     for x in grid[y]:
         if grid[y][x] == ON:
             count_lights += 1
+    
+# Part 2
+grid2 = {}
+for y in range(0,1000):
+    grid2[y] = {}
+    for x in range(0,1000):
+        grid2[y][x] = 0
+
+for i in range(0, len(lines)):
+    start_x = Data_Read(lines[i]).x1
+    start_y = Data_Read(lines[i]).y1
+    end_x = Data_Read(lines[i]).x2
+    end_y = Data_Read(lines[i]).y2
+    if "turn on" in lines[i]:
+        on_lights2(grid2,start_x,start_y,end_x,end_y)
+    elif "turn off" in lines[i]:
+        off_lights2(grid2,start_x,start_y,end_x,end_y)
+    if "toggle" in lines[i]:
+        toggle_lights2(grid2,start_x,start_y,end_x,end_y)
+
+sum_lights = 0
+for y in grid2:
+    for x in grid2[y]:
+        sum_lights += grid2[y][x]
 
 print "Part 1: " + str(count_lights) # Correct!
-        
+print "Part 2: " + str(sum_lights) # Correct!
