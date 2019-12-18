@@ -62,11 +62,25 @@ for y in range(0,1000):
     for x in range(0,1000):
         grid[y][x] = OFF
 
-if "turn on" in lines[0]:
-    start_x = Data_Read(lines[0]).x1
-    start_y = Data_Read(lines[0]).y1
-    end_x = Data_Read(lines[0]).x2
-    end_y = Data_Read(lines[0]).y2
-    on_lights(grid,start_x,start_y,end_x,end_y)
+for i in range(0, len(lines)):
+    start_x = Data_Read(lines[i]).x1
+    start_y = Data_Read(lines[i]).y1
+    end_x = Data_Read(lines[i]).x2
+    end_y = Data_Read(lines[i]).y2
+    if "turn on" in lines[i]:
+        on_lights(grid,start_x,start_y,end_x,end_y)
+    elif "turn off" in lines[i]:
+        off_lights(grid,start_x,start_y,end_x,end_y)
+    if "toggle" in lines[i]:
+        toggle_lights(grid,start_x,start_y,end_x,end_y)
 
 image_grid(grid)
+
+count_lights = 0
+for y in grid:
+    for x in grid[y]:
+        if grid[y][x] == ON:
+            count_lights += 1
+
+print "Part 1: " + str(count_lights) # Correct!
+        
