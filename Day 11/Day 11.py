@@ -44,9 +44,6 @@ inp = 'hepxcrrq'
 password = []
 for i in range(0,len(inp)):
     password.append(inp[i])
-print(password)
-
-print(check_password(password))
 
 # Part 1
 flag = 0
@@ -56,3 +53,8 @@ while flag == 0:
         flag += 1
 
 print("Part 1: " + password[0] + password[1] + password[2] + password[3] + password[4] + password[5] + password[6] + password[7])
+
+# ...damn it, used reasoning for this.  lol.  This code works but runs forever.
+# hepxxyzz is the next password for Part 1
+# heqaabcc is the next password for Part 2
+# Try to code?
