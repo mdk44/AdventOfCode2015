@@ -1,11 +1,18 @@
-# input_file = 'Day 14\\Input.csv'
-input_file = 'Day 14\\Test.csv'
+input_file = 'Day 14\\Input.csv'
+# input_file = 'Day 14\\Test.csv'
 text_file = open(input_file)
 lines = text_file.read().split('\n')
 
-def calc_deer(deer, speed, time, rest):
-    #do stuff
-    #return stuff
+def calc_deer(speed, time, rest, seconds):
+    elapsed = 0
+    dist = 0
+    while elapsed <= seconds:
+        elapsed += time
+        elapsed += rest
+        dist += (speed*time)
+    return dist
+    
+
 
 deer = []
 speed = []
@@ -18,7 +25,8 @@ for line in lines:
     rest.append(int(line.split(' ')[13]))
     print(line)
 
-# for dr in deer:
-#     results.append(calc_deer(dr))
+results = []
+for i in range(0,len(deer)):
+    results.append(calc_deer(speed[i],time[i],rest[i],2503))
 
-# do something like this
+print("Part 1: " + str(max(results))) # Correct, although I feel like this doesn't account for deer who are running when the clock retires
