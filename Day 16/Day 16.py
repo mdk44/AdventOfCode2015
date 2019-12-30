@@ -18,10 +18,6 @@ sue['perfumes:'] = 1
 
 def check_p1(types, value):
     value = int(value)
-    # if types == "cats:" or types == "trees:":
-    #     return sue[types] < value
-    # elif types == "pomeranians:" or types == "goldfish:":
-    #     return sue[types] > value
     return sue[types] == value
 
 def check_p2(types, value):
