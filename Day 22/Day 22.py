@@ -34,9 +34,10 @@ def poison(mana, turn):
 def recharge(mana, turn):
     if mana >= 229 and turn == 5:
         mana -= 229
-    if turn > 0 and turn < 5:
+    if turn >= 0 and turn < 5:
         mana += 101
     return mana
 
 # Need to figure out how many spells I need to cast to win.  add mana to mana_spent (do not undo this with Shield - mana spent is always mana spent)
 # Effect spells can be started on the same turn they end
+# Define my turn and boss turn, then cycle.
