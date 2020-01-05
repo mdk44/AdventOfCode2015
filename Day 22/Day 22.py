@@ -1,72 +1,107 @@
-boss_hp = 55
-boss_dmg = 8
-my_hp = 50
-my_mana = 500
-my_arm = 0
+import random
 
-def magic_missile(mana):
-    if mana >= 53:
-        mana -= 53
-        dmg = 4
-    return mana, dmg
+mana_min = 9999
 
-def drain(mana):
-    if mana >= 73:
-        mana -= 73
-        dmg = 2
-    return mana, dmg
-
-def shield(mana, turn):
-    if mana >= 113 and turn == 6:
-        mana -= 113
-    if turn > 0 and turn <= 6:
-        arm = 7
-        shield = True
-    return mana, arm, shield
-
-def poison(mana, turn):
-    if mana >= 173 and turn == 6:
-        mana -= 173
-    if turn > 0 and turn <= 6:
-        dmg = 3
-        poison = True
-    return mana, dmg, poison
-    
-def recharge(mana, turn):
-    if mana >= 229 and turn == 5:
-        mana -= 229
-    if turn >= 0 and turn < 5:
-        mana += 101
-        recharge = True
-    return mana, recharge
-
-def combat(my_hp, my_mana, my_arm, boss_hp, boss_dmg):
-    winner = 0
+def combat():
+    boss_hp = 55
+    boss_dmg = 8
+    my_hp = 50
+    mana = 500
+    arm = 0
     mana_spent = 0
+    spells = [['Magic Missile', 53],['Drain', 73],['Shield', 113],['Poison', 173],['Recharge', 229]]
+    turn = 'Player'
+    shield = False
+    shield_turn = 0
+    poison = False
+    poison_turn = 0
+    recharge = False
+    recharge_turn = 0
+    winner = 0
+
     while winner == 0:
-        # My turn
-        mana, dmg = magic_missile(my_mana)
-        boss_hp -= dmg
-        my_mana -= mana
-        mana_spent += mana
-        if boss_hp <= 0:
-            print("You have won!")
-            print("Mana spent: " + str(mana_spent))
-            break
+        if shield:
+            arm = 7
+            shield_turn += 1
+            if shield_turn == 6:
+                shield = False
         else:
-            print("You have damaged the boss for " + str(dmg) + " and his hp is now " + str(boss_hp))
-        # Boss turn
-        my_hp += my_arm
-        my_hp -= boss_dmg
-        if my_hp <= 0:
-            print("You lost. :'( ")
-            print("Mana spent: " + str(mana_spent))
-            break
+            arm = 0
+        if poison:
+            boss_hp -= 3
+            if boss_hp <= 0:
+                return 'You win!', mana_spent
+            poison_turn += 1
+            if poison_turn == 6:
+                poison = False
+        if recharge:
+            mana += 101
+            recharge_turn += 1
+            if recharge_turn == 5:
+                recharge = False
+
+        if turn == 'Player':
+            # Part 2
+            my_hp -= 1
+            if my_hp <= 0:
+                return 'Boss wins. :(', mana_spent
+            spell = None
+            random.shuffle(spells)
+            for s in spells:
+                if mana >= s[1]:
+                    if s[0] == 'Shield':
+                        if shield:
+                            continue
+                    if s[0] == 'Poison':
+                        if poison:
+                            continue
+                    if s[0] == 'Recharge':
+                        if recharge:
+                            continue
+                    spell = s 
+                    break
+            if spell == None:
+                return 'Boss wins. :(', mana_spent
+            mana -= spell[1]
+            if mana < 0:
+                mana = 0
+            mana_spent += spell[1]
+            if spell[0] == 'Magic Missile':
+                boss_hp -= 4
+                if boss_hp <= 0:
+                    return 'You win!', mana_spent
+            if spell[0] == 'Drain':
+                boss_hp -= 2
+                if boss_hp <= 0:
+                    return 'You win!', mana_spent
+                my_hp += 2
+            if spell[0] == 'Shield':
+                arm = 7
+                shield = True
+                shield_turn = 0
+            if spell[0] == 'Poison':
+                poison = True
+                poison_turn = 0
+            if spell[0] == 'Recharge':
+                recharge = True
+                recharge_turn = 0
+            turn = 'Boss'
         else:
-            print("The boss has damaged you for " + str(boss_dmg - my_arm) + " and your hp is now " + str(my_hp))
+            dmg = boss_dmg - arm
+            if dmg < 1:
+                dmg = 1
+            my_hp -= dmg
+            if my_hp <= 0:
+                return 'Boss wins. :(', mana_spent
+            turn = 'Player'
 
-combat(my_hp, my_mana, my_arm, boss_hp, boss_dmg)
+result, mana = combat()
 
-# Need to figure out how many spells I need to cast to win.  add mana to mana_spent (do not undo this with Shield - mana spent is always mana spent)
-# Effect spells can be started on the same turn they end
-# Define my turn and boss turn, then cycle.
+while True:
+    result, mana = combat()
+    if result == 'You win!':
+        if mana < mana_min:
+            mana_min = mana
+            print(result + " " + str(mana_min))
+
+# Correct!  Need to stop code run after several seconds as it likely found the answer.
